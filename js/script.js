@@ -39,14 +39,23 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     //Timet
-    const deadLine = '2024-06-15';
+    const deadLine = '2024-06-13';
 
     function getTimeRemaining(endtime) {
-        const t = Date.parse(endtime) - Date.parse(new Date()),
-            days = Math.floor(t / (1000 * 60 * 60 * 24)),
-            hours = Math.floor((t / (1000 * 60 * 60)) % 24),
-            minutes = Math.floor((t / 1000 / 60) % 60),
+        let days, hours, minutes, seconds;
+        const t = Date.parse(endtime) - Date.parse(new Date());
+        if (t <= 0) {
+            days = 0;
+            hours = 0;
+            minutes = 0;
+            seconds = 0;
+        } else {
+            days = Math.floor(t / (1000 * 60 * 60 * 24));
+            hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+            minutes = Math.floor((t / 1000 / 60) % 60);
             seconds = Math.floor((t / 1000) % 60);
+        }
+
         return {
             'total': t,
             'days': days,
@@ -74,6 +83,7 @@ window.addEventListener('DOMContentLoaded', () => {
             timeInterval = setInterval(updateClock, 1000);
 
         updateClock();
+
         function updateClock() {
             const t = getTimeRemaining(endtime);
 
