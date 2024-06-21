@@ -435,11 +435,15 @@ window.addEventListener('DOMContentLoaded', () => {
             list-style: none;
         `
 
+        function deleteNotDigits(str) {
+            return +str.replace(/\D/g, '');
+        }
+
         next.addEventListener('click', () => {
-            if (offset === +widht.slice(0, widht.length - 2) * (slides.length - 1)) { //'500px'
+            if (offset === deleteNotDigits(widht)) { //'500px'
                 offset = 0;
             } else {
-                offset += +widht.slice(0, widht.length - 2);
+                offset += deleteNotDigits(widht);
             }
 
             slidesField.style.transform = `translateX(-${offset})px`;
@@ -460,9 +464,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
         prev.addEventListener('click', () => {
             if (offset == 0) { //'500px'
-                offset = +widht.slice(0, widht.length - 2) * (slides.length - 1)
+                offset = deleteNotDigits(widht) * (slides.length - 1)
             } else {
-                offset -= +widht.slice(0, widht.length - 2);
+                offset -= deleteNotDigits(widht);
             }
 
             slidesField.style.transform = `translateX(-${offset})px`;
@@ -488,7 +492,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 slideIndex = slideTo;
 
-                offset = +widht.slice(0, widht.length - 2) * (slideTo - 1);
+                offset = deleteNotDigits(widht);
 
                 if (slides.length < 10) {
                     current.textContent = `0${slideIndex}`;
